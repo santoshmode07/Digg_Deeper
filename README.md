@@ -1,6 +1,6 @@
 # 🌟 DIGG_DEEPERR - 15 Days of DSA Challenge 🚀
 
-> **A 15-Day Journey to Master DSA, Build Consistency, and Crack Coding Interviews**
+> **A 15-Day Journey to Learn Problem Solving , Build Consistency**
 
 ---
 

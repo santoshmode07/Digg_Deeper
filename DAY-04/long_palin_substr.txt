@@ -1,0 +1,32 @@
+class Solution {
+public:
+    pair<int,int> helper(string s,int left,int right){
+        while(left>=0&&right<s.size()&&s[left]==s[right]){
+            left--;
+            right++;
+        }
+        return{left+1,right-1};
+    }
+    string longestPalindrome(string s) {
+        int n=s.size();
+        if(n<=1){
+            return s;
+        }
+        string ans="";
+        int maxx=0;
+        for(int i=0;i<n;i++){
+            auto [l1, r1] = helper(s, i, i+1); 
+            auto [l2, r2] = helper(s, i,i); 
+            if(max(r1-l1+1,r2-l2+1)>maxx){
+                maxx=max(r1-l1+1,r2-l2+1);
+                if(maxx==r1-l1+1){
+                    ans=s.substr(l1,r1-l1+1);
+                }
+                else{
+                    ans=s.substr(l2,r2-l2+1);
+                }
+            }
+        }
+        return ans;
+    }
+};

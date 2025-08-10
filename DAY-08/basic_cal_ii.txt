@@ -1,0 +1,78 @@
+class Solution {
+public:
+    int calculate(string s) {
+        string final="";
+        int n=s.size(),i=0;
+        while(i<n){
+            if(isspace(s[i])){
+                i++;
+            }
+            else{
+                final.push_back(s[i]);
+                i++;
+            }
+        }
+        n=final.size();
+        i=0;
+        vector<string>nums;
+        int count=0;
+        bool parsingNumber = false;
+        while(i<n){
+            if(isdigit(final[i])){
+                count=count*10+(final[i]-'0');
+                parsingNumber = true;
+                i++;
+            }
+            else{
+                if(parsingNumber){
+                nums.push_back(to_string(count));
+                count=0;
+                }
+                if(final[i]=='/'){
+                    int backnums=stoi(nums.back());
+                    nums.pop_back();
+                    i++;
+                    while(i<n&&isdigit(final[i])){
+                        count=count*10+(final[i]-'0');
+                        i++;
+                    }
+                    int frontnums=count;
+                    count=0;
+                    parsingNumber=false;
+                    nums.push_back(to_string(backnums/frontnums));
+                }
+                else if(final[i]=='*'){
+                    int backnums=stoi(nums.back());
+                    nums.pop_back();
+                    i++;
+                    while(i<n&&isdigit(final[i])){
+                        count=count*10+(final[i]-'0');
+                        i++;
+                    }
+                    int frontnums=count;
+                    count=0;
+                    parsingNumber=false;
+                    nums.push_back(to_string(backnums*frontnums));
+                }
+                else{
+                    nums.push_back(string(1,final[i]));
+                    i++;
+                }
+            }
+        }
+        if(parsingNumber){
+            nums.push_back(to_string(count));
+        }
+        n=nums.size();
+        int result=stoi(nums[0]);
+        for(int j=1;j<n;j=j+2){
+            if(nums[j]=="+"){
+               result+=stoi(nums[j+1]);
+            }
+            else if(nums[j]=="-"){
+                result-=stoi(nums[j+1]);
+            }
+        }
+        return result;
+    }
+};

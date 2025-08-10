@@ -1,0 +1,54 @@
+class Solution {
+public:
+    string repeat(int n,string res){
+        string num="";
+        for(int i=0;i<n;i++){
+            num+=res;
+        }
+        return num;
+    }
+    string decodeString(string s) {
+        int n=s.size();
+        string ans="";
+        stack<string>stk;
+        int num=0;
+        stack<string>stkk;
+        for(int i=0;i<n;i++){
+            if(s[i]==']'){
+                string res="";
+                while(stk.top()!="["){
+                    stkk.push(stk.top());
+                    stk.pop();
+                }
+                stk.pop();
+                int count=stoi(stk.top());
+                stk.pop();
+                while(!stkk.empty()){
+                    res+=stkk.top();
+                    stkk.pop();
+                }
+                stk.push(repeat(count,res));
+            }
+            else if(isdigit(s[i])){
+                num = num * 10 + (s[i] - '0');
+            }
+            else if(s[i]=='['){
+                stk.push(to_string(num));
+                stk.push(string(1,s[i]));
+                num=0;
+            }
+            else{
+                stk.push(string(1,s[i]));
+            }
+        }
+        while(!stk.empty()){
+            stkk.push(stk.top());
+            stk.pop();
+        }
+        while(!stkk.empty()){
+            ans+=stkk.top();
+            stkk.pop();
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,46 @@
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        string ans;
+        int i=0;
+        int n=s.size();
+        while(i<n){
+            if(!ans.empty()){
+                if(ans.back()==s[i]){
+                    int nn=ans.size()-1;
+                    int count=1;
+                    while(nn>=0&&ans[nn]==s[i]){
+                        count++;
+                        nn--;
+                    }
+                    int temp=1;
+                    string may=string(1,s[i]);
+                    while(i<n&&s[i+1]==s[i]&&count!=k){
+                        count++;
+                        temp++;
+                        i++;
+                        may+=s[i];
+                    }
+                    if(count==k){
+                        int get=count-temp;
+                        while(get){
+                            ans.pop_back();
+                            get--;
+                        }
+                    }
+                    else{
+                        ans+=may;
+                    }
+                }
+                else{
+                    ans+=s[i];
+                }
+            }
+            else{
+                ans+=s[i];
+            }
+            i++;
+        }
+        return ans;
+    }
+};
